@@ -22,10 +22,11 @@ for pdb in clean_data:
     try:
         response = urllib.request.urlopen(f'https://files.rcsb.org/download/{pdb}.pdb')
         target_file = target_path + f'/{pdb}.pdb'
+        if not os.path.isfile(target_file):
+            with open(target_file, 'wb') as f:
+                f.write(response.read())
+            print(f'downloaded {pdb}')    
 
-        with open(target_file, 'wb') as f:
-            f.write(response.read())
-            
     except: 
         print(f'cannot download {pdb}')
         
