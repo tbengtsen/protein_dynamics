@@ -7,3 +7,5 @@ data/pdbs_raw/*.pdb
 data/pdbs_cleaned/*.pdb
 
 scripts/reduce*
+
+*ipynb_checkpoints*

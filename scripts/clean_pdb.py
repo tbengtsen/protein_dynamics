@@ -224,7 +224,13 @@ def clean_pdb(pdb_input_filename: str, out_dir: str, reduce_executable: str):
 
         # Step 2: NonHetSelector filter
         with tempfile.NamedTemporaryFile(mode="wt", delete=True) as temp2:
-            structure = _non_het_filter(structure, temp2)
+            PDBIO.set_structure(structure)
+            PDBIO.save(temp2, select=NonHetSelector())
+            temp2.flush()
+            structure = PDB_PARSER.get_structure(temp2.name, temp2.name)[0]
+
+            
+            #structure = _non_het_filter(structure, temp2)
             
             # Step 3: Use pdbfixer to correct errors 
             # in pdb structure and replace altloc chars to " " 
@@ -234,6 +240,7 @@ def clean_pdb(pdb_input_filename: str, out_dir: str, reduce_executable: str):
                 # Step 4: Correct for pdbfixer not preserving insertion codes
                 with tempfile.NamedTemporaryFile(mode="wt", delete=True) as temp4:
                     structure = _fix_numbering(fixer, temp_3, temp4)
+    
                     # step 5: Add hydrogens again for the missing residues and 
                     # atoms pdbfixer rebuilt 
                     with tempfile.NamedTemporaryFile(mode="wt", delete=True) as temp5:
