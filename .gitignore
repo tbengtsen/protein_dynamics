@@ -12,7 +12,8 @@ data/CATH4.3/mmtf*
 
 data/pdbs_raw/*.pdb
 data/pdbs_cleaned/*.pdb
-
+*log*.log
 scripts/reduce*
 
 *ipynb_checkpoints*
+*submit*

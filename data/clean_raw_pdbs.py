@@ -12,6 +12,8 @@ out_dir = './pdbs_cleaned/'
 raw_pdbs = glob.glob('pdbs_raw/*.pdb')
 log_file = 'log_clean_raw_pdbs.log'
 
+print(len(raw_pdbs))
+
 assert len(raw_pdbs)!= 0, ('Cannot find any downloaded pdbs.',
                            ' Please run: download_raw_pdbs.py first ')
 
@@ -29,11 +31,14 @@ assert os.path.isfile(reduce_het_dict), (
 log = open(log_file, 'w')
 
 
-for pdb_file in raw_pdbs:
+for pdb_file in raw_pdbs: 
     try:
-        clean_pdb(pdb_file, out_dir, reduce_executable)
+        pdbid = pdb_file.split("/")[-1].split(".pdb")[0]
+        outpdb = os.path.join(out_dir, pdbid + "_clean.pdb")
+        if not os.path.isfile(outpdb):
+            clean_pdb(pdb_file, out_dir, reduce_executable)
     except:
-        log.write(f'{pdb_file}, something went wrong when cleaning the file')
+        log.write(f'{pdbid}, something went wrong when cleaning the file\n')
         
     
 log.close()
