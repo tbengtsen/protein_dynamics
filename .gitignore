@@ -3,6 +3,13 @@
 data/CATH4.3/mmtf/*
 data/CATH4.3/mmtf*
 
+# ignore trajecktories and checkpoints
+*.xtc
+*.dcd
+*checkpoint*
+*.pdb
+*.log
+
 data/pdbs_raw/*.pdb
 data/pdbs_cleaned/*.pdb
 
