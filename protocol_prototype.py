@@ -725,7 +725,7 @@ if __name__ =="__main__":
     # trajectory output
     out_format = "xtc"  # only .pdb or .dcd in OpenMM
     out_freq = (
-        200 * unit.picoseconds
+        50 * unit.picoseconds
     )  # => 100 frames total. @Kresten wasn't this what we discussed? I can't remember:(
 
     # stdout frequency and log_file frequency
@@ -758,6 +758,10 @@ if __name__ =="__main__":
     
     if IO_args.out_dir is not None:
         out_dir = IO_args.out_dir
+        if list(out_dir)[-1] != '/':
+            out_dir = out_dir + '/'
+
+
     else: 
         out_dir = './' + name_pdb + '/'
     
