@@ -754,8 +754,9 @@ if __name__ =="__main__":
     
     
     PDB_file = IO_args.pdb
-    name_pdb = PDB_file.split("_")[0]
-    
+    name_pdb = PDB_file.split('/')[-1].split('_clean')[0]
+    print('processing: ', name_pdb) 
+
     if IO_args.out_dir is not None:
         out_dir = IO_args.out_dir
         if list(out_dir)[-1] != '/':
@@ -766,7 +767,7 @@ if __name__ =="__main__":
         out_dir = './' + name_pdb + '/'
     
     if not os.path.isdir(out_dir):
-        os.makedirs('out_dir')
+        os.makedirs(out_dir)
     
     # ===========================================================================
     #          BUILD
@@ -890,7 +891,7 @@ if __name__ =="__main__":
         # get total simulation time
         curr_time = curr_state.getTime()
         curr_time_int = int(curr_time.value_in_unit(unit.picoseconds))
-
+        print('equil curr time:', curr_time_int, 'ps')
         # time to check if equilibrated?
         if curr_time >= assess_equil_1:
 
@@ -1027,7 +1028,7 @@ if __name__ =="__main__":
         f" > {equil_max_rmsd}.",
         "Protein is discarded! ",
     )
-    
+
     # save equilibrated PDB
     out_file = f"equil_{name_pdb}.pdb"
     save_pdb(curr_state, modeller, out_file, out_dir)
