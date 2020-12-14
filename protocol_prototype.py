@@ -761,14 +761,17 @@ if __name__ =="__main__":
         out_dir = IO_args.out_dir
         if list(out_dir)[-1] != '/':
             out_dir = out_dir + '/'
-
-
     else: 
         out_dir = './' + name_pdb + '/'
     
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
     
+    if IO_args.cuda:
+         platform = mm.Platform.getPlatformByName("CUDA")
+         platformProperties = {"CudaPrecision": "mixed"}
+
+
     # ===========================================================================
     #          BUILD
     # ===========================================================================
