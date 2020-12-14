@@ -266,7 +266,7 @@ def get_rmsd(current_state, modeller):
     sim_coords = get_CA_coords(modeller, sim_coords_all)
     pdb_coords = get_CA_coords(modeller)
     sim_rmsd = calculate_rmsd(pdb_coords, sim_coords)
-
+    
     return sim_rmsd
 
 
@@ -841,6 +841,11 @@ if __name__ =="__main__":
     print("\nEnergies after minimization:")
     test_force_groups(simulation)
     
+    # XXX TMP 
+    curr_state = simulation.context.getState(getEnergy=True, getPositions=True)
+    curr_rmsd = get_rmsd(curr_state, modeller)
+    ## TMP END 
+
     # ===========================================================================
     #          1st equilibration -  with positional restraints 
     # ===========================================================================
@@ -990,6 +995,7 @@ if __name__ =="__main__":
                 print(
                     f"\n Protein equilibrated  after: {curr_time} ",
                     f"\nrun time took: {time.time()-start_time} min",
+                    flush=True
                 )
                 plot_equilibration(traj_energy, report_steps * equil_dt, name="Equil_2_Energy", out_dir=out_dir)
                 plot_equilibration(traj_rmsd, report_steps * equil_dt, name="Equil_2_RMSD [A]", out_dir=out_dir)
