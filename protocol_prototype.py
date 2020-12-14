@@ -1023,14 +1023,17 @@ if __name__ =="__main__":
             )
             plot_equilibration(traj_rmsd, report_steps * equil_dt, name="Equil_2_RMSD [A]", out_dir=out_dir)
 
-            break
-            # sys.exit ()....
+            print(f'OBS! Equilibration not reached within {equil_2_max}')
+            sys.exit (f'Obs - Equilibration not reached within {equil_2_max}')
 
-    assert curr_rmsd < equil_max_rmsd.value_in_unit(unit.angstrom), (
-        f"RMSD {curr_rmsd} of equilibrated protein to input protein is too high",
-        f" > {equil_max_rmsd}.",
-        "Protein is discarded! ",
-    )
+    if curr_rmsd < equil_max_rmsd.value_in_unit(unit.angstrom):
+        # save non-equilibrated PDB
+        out_file = f"equil_rmsd_to_high_{name_pdb}.pdb"
+        save_pdb(curr_state, modeller, out_file, out_dir)
+        print(f'OBS! RMSD after equilibration > {equil_max_rmsd}')
+        sys.exit (f'OBS! RMSD after equilibration > {equil_max_rmsd}',
+                "Protein is discarded! "
+                 )
 
     # save equilibrated PDB
     out_file = f"equil_{name_pdb}.pdb"
