@@ -16,7 +16,7 @@ for path_pdb in cleaned_pdbs[:2]:
     cmd = f'{MD_python} run_prototype.py --pdb {path_pdb} --trajectory_format {traj_format} --out_dir {out_dir}'
     print('\ncmd:\n',cmd)
     if not os.path.isdir(out_dir):
-        os.makedirs('out_dir')
+        os.makedirs(out_dir)
     os.popen(f'cp {submit_file} {out_dir}')
     with open(out_dir + submit_file, 'a+') as submit:
         submit.write('\n')
