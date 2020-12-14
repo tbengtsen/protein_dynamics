@@ -382,7 +382,7 @@ def plot_equilibration(measurement, timestep, name=None,out_dir =None):
 
     if out_dir is not None:
         plt.savefig(out_dir + f'plot_{name}.png',dpi=200)
-
+    plt.close()
 
 # ========================================================
 # helpers for saving production run
