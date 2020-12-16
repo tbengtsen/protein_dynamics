@@ -709,7 +709,7 @@ if __name__ =="__main__":
     assess_period_2 = 1.0 * unit.nanoseconds
 
     # max rmsd of equilibrated protein allowed before discarding
-    equil_max_rmsd = 2 * unit.angstrom  # a bit high perhaps
+    equil_max_rmsd = 3 * unit.angstrom  # a bit high perhaps
 
     # ===========================================================================
     #           Simulation / Production Run
@@ -1026,7 +1026,7 @@ if __name__ =="__main__":
             print(f'OBS! Equilibration not reached within {equil_2_max}')
             sys.exit (f'Obs - Equilibration not reached within {equil_2_max}')
 
-    if curr_rmsd < equil_max_rmsd.value_in_unit(unit.angstrom):
+    if curr_rmsd > equil_max_rmsd.value_in_unit(unit.angstrom):
         # save non-equilibrated PDB
         out_file = f"equil_rmsd_to_high_{name_pdb}.pdb"
         save_pdb(curr_state, modeller, out_file, out_dir)
