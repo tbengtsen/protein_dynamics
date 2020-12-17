@@ -915,7 +915,7 @@ if __name__ =="__main__":
         if curr_time > equil_1_max:
             print(
                 f"OBS!\n",
-                f"First equilibration not reached (╯°□°）╯︵ ┻━┻ \n"
+                f"First equilibration not reached \n"
                 f"Protein could not equilibrate before {equil_1_max}",
             )
             plot_equilibration(traj_energy, report_steps * equil_dt, name="Equil_1_Energy", out_dir=out_dir)
@@ -998,7 +998,7 @@ if __name__ =="__main__":
             if E_equilibrated and rmsd_equilibrated:
                 print(
                     f"\n Protein equilibrated  after: {curr_time} ",
-                    f"\nrun time took: {time.time()-start_time} min",
+                    f"\nrun time took: {(time.time()-start_time)/60} min",
                     flush=True
                 )
                 plot_equilibration(traj_energy, report_steps * equil_dt, name="Equil_2_Energy", out_dir=out_dir)
@@ -1093,6 +1093,6 @@ if __name__ =="__main__":
     curr_state = simulation.context.getState(getPositions=True)
     save_pdb(curr_state, modeller, pdb_out, out_dir)
 
-    print(f'production took: {(time.time()-end_equil)/60}')
-    print(f'entire script took: {(time.time()-script_start_time)/60} mins')
+    print(f'production took: {(time.time()-end_equil)/360} h')
+    print(f'entire script took: {(time.time()-script_start_time)/360} h')
     
