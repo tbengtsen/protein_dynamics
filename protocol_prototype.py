@@ -709,7 +709,8 @@ if __name__ =="__main__":
     assess_period_2 = 1.0 * unit.nanoseconds
 
     # max rmsd of equilibrated protein allowed before discarding
-    equil_max_rmsd = 3 * unit.angstrom  # a bit high perhaps
+    equil_max_rmsd = 5 * unit.angstrom  # a bit high but important for large
+    flex tails or loops
 
     # ===========================================================================
     #           Simulation / Production Run
