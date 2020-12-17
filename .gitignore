@@ -2,7 +2,8 @@
 *mmtf*/
 data/CATH4.3/mmtf/*
 data/CATH4.3/mmtf*
-
+data/CATH4.3/pdbs_raw/*.pdb
+data/CATH4.3/pdbs_cleaned/*.pdb
 
 
 # ignore trajecktories and checkpoints
@@ -13,6 +14,7 @@ data/CATH4.3/mmtf*
 *.log
 
 data/pdbs_raw/*.pdb
+
 data/pdbs_cleaned/*.pdb
 *log*.log
 scripts/reduce*
