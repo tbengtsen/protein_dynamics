@@ -1086,7 +1086,7 @@ if __name__ =="__main__":
     traj_reporter.close()
 
     # save checkpoint files
-    save_checkpoint(simulation, system, integrator, name_pdb)
+    save_checkpoint(simulation, system, integrator, name_pdb, out_dir)
 
     # save last frame as pdb
     pdb_out =  f"{name_pdb}_simulation_last_frame.pdb"
