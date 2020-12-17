@@ -12,6 +12,9 @@ data/CATH4.3/pdbs_cleaned/*.pdb
 *checkpoint*
 *.pdb
 *.log
+*slurm-* 
+*plot_*.png
+simulations/*
 
 data/pdbs_raw/*.pdb
 
