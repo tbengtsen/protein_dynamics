@@ -12,7 +12,7 @@ submit_file_cont = ['#!/bin/bash',
 
 cwd = os.getcwd() 
 MD_python = '/home/trz846/anaconda3/envs/MD/bin/python'
-path_cleaned = 'data/pdbs_cleaned/'
+path_cleaned = 'data/CATH4.3/pdbs_cleaned/' ## XX <---- OBS ! CHANGE
 cleaned_pdbs = glob.glob(path_cleaned +'/*.pdb')
 traj_format = 'xtc'
 

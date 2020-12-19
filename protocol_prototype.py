@@ -894,7 +894,7 @@ if __name__ =="__main__":
         # get total simulation time
         curr_time = curr_state.getTime()
         curr_time_int = int(curr_time.value_in_unit(unit.picoseconds))
-        print('equil curr time:', curr_time_int, 'ps')
+        
         # time to check if equilibrated?
         if curr_time >= assess_equil_1:
 
