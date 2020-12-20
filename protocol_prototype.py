@@ -478,9 +478,9 @@ def save_checkpoint(simulation, system, integrator, name_pdb, out_dir):
         getVelocities=True,
         getForces=True,
         getEnergy=True,
-        getParameters=True,
-        enforcePeriodicBox=True,
-    )
+        getParameters=True)
+#         enforcePeriodicBox=True,
+#     )
 
     # system.xml contains all of the force field parameters
     with open(out_dir+f"checkpoint_system_{name_pdb}.xml", "w") as f:
@@ -491,40 +491,96 @@ def save_checkpoint(simulation, system, integrator, name_pdb, out_dir):
         integrator_xml = mm.XmlSerializer.serialize(integrator)
         f.write(integrator_xml)
     # state.xml contains positions, velocities, forces, the barostat
-    with open(out_dir+f"checkpoint_state_{name_pdb}.xml", "w") as f:
-        f.write(mm.XmlSerializer.serialize(state))
+    simulation.saveState(out_dir+f"checkpoint_state_{name_pdb}.xml")
 
+#     with open(f"checkpoint_state_{name_pdb}.xml", "w") as f:
+#         f.write(mm.XmlSerializer.serialize(state))
+    
+    # save checkpoint for hardware specific test
+    simulation.saveCheckpoint(out_dir + f'checkpoint_hardware_specific_{name_pdb}.chk')
+    
     print("\nCheckpoint files saved\n")
 
 
-def load_checkpoint(name_pdb, out_dir,platform=None, properties=None):
+def load_checkpoint(name_pdb,
+                    out_dir, 
+                    platform='CUDA',
+                    properties=None,
+                    chkpoint_type='chk'):
+    '''
+    restart simulation by loading saved files. 
+    Outputs saved simulation state, system and topology.
+    
+    Parameters
+    ----------
+    
+    name_pdb: str 
+        name of structure to start from. PDBID
+    
+    platform: str
+        name of platform to start simulation on. Must be 'CUDA' or "CPU"
+    
+    chkpoint_type: str
+        type of file to load from. Must be 'xml' or 'chk'
+    
+    '''
+    
+    assert platform in ['CUDA', 'CPU'], ('platform type must be CUDA or CPU')
+    assert chkpoint_type in ['xml','chk'], ('checkpoint file must be either xml or chk')  
+    
+    # load pdb to get topology
+    pdb = mm.app.PDBFile(f"{name_pdb}.pdb")
+    topology = pdb.topology
+    
+    # load system and integrator 
     system = mm.XmlSerializer.deserialize(
-        open(out_dir + f"checkpoint_system_{name_pdb}.xml").read()
+        open(f"checkpoint_system_{name_pdb}.xml").read()
     )
     integrator = mm.XmlSerializer.deserialize(
-        open(out_dir + f"checkpoint_integrator_{name_pdb}.xml").read()
+        open(f"checkpoint_integrator_{name_pdb}.xml").read()
     )
-    state = mm.XmlSerializer.deserialize(
-        open(out_dir + f"checkpoint_state_{name_pdb}.xml").read()
-    )
-    pdb = mm.app.PDBFile(out_dir + f"{name_pdb}.pdb")
-    topology = pdb.topology
-
-    # specify simulation platform
-    if platform is None:
-        platform = mm.Platform.getPlatformByName("CUDA")
-    if properties is None:
-        properties = {"CudaPrecision": "mixed"}
+   
+    # set platfrom
+    platform, properties  = set_platform(platform)
 
     # reconstruct the simulation
     simulation = mm.app.Simulation(topology, system, integrator, platform, properties)
-    simulation.context.setState(state)
+    
+    # load state with positions, velocities etc into simulation
+    if chkpoint_type == 'xml':  # load from txt file
+        simulation.loadState(f"checkpoint_state_{name_pdb}.xml")
+#         state = mm.XmlSerializer.deserialize(
+#             open(f"checkpoint_state_{name_pdb}.xml").read()
+#         )
+#         simulation.context.setState(state)
+        
+    
+    # load from binary hardware specific file
+    elif chkpoint_type == 'chk':
+        simulation.loadCheckpoint(f'checkpoint_hardware_specific_{name_pdb}.chk')
 
-    return (
-        simulation,
-        system,
-        topology,
-    )
+
+    return simulation, system, topology
+
+
+def set_platform(platform_type):
+    '''set the simulation platform'''
+    
+    assert platform_type in ['CUDA','CPU'], ('platform must be CUDA or CPU')
+    
+    
+    # specify simulation platform
+    if platform_type.upper()== 'CUDA':
+
+        platform = mm.Platform.getPlatformByName("CUDA")
+        platform_properties = {"CudaPrecision": "mixed"}
+
+    elif platform_type.upper() == 'CPU':
+        platform = mm.Platform.getPlatformByName("CPU")    
+        platform_properties = {}
+        
+    return platform, platform_properties
+
 
 
 def save_pdb(state, modeller, out_name, out_dir ):
