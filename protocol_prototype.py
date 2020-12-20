@@ -825,8 +825,11 @@ if __name__ =="__main__":
     
     if IO_args.cuda:
          platform = mm.Platform.getPlatformByName("CUDA")
-         platformProperties = {"CudaPrecision": "mixed"}
+         platform_properties = {"CudaPrecision": "mixed"}
 
+    else:
+        platform = mm.Platform.getPlatformByName("CPU")    
+        platform_properties = {}
 
     # ===========================================================================
     #          BUILD
@@ -887,7 +890,9 @@ if __name__ =="__main__":
     system = add_pos_restraints(system, fc_bb, fc_sc)
 
     # set up simulation
-    simulation = Simulation(modeller.topology, system, integrator)
+    simulation = Simulation(modeller.topology, system, integrator, platform,
+            platform_properties)
+
     simulation.context.setPositions(modeller.positions)
 
     print("Using Platform:", simulation.context.getPlatform().getName())
@@ -901,10 +906,6 @@ if __name__ =="__main__":
     print("\nEnergies after minimization:")
     test_force_groups(simulation)
     
-    # XXX TMP 
-    curr_state = simulation.context.getState(getEnergy=True, getPositions=True)
-    curr_rmsd = get_rmsd(curr_state, modeller)
-    ## TMP END 
 
     # ===========================================================================
     #          1st equilibration -  with positional restraints 
@@ -1136,8 +1137,14 @@ if __name__ =="__main__":
                          modeller)
 
     # perform simulation
-    simulation.step(sim_steps)
+    simulation.step(int(sim_steps/2))
 
+    # save midways
+    save_checkpoint(simulation, system, integrator, name_pdb, out_dir)
+
+    # perform simulation
+    simulation.step(int(sim_steps/2))
+    
     # close trajectory reporter file
     traj_reporter.close()
 
