@@ -7,7 +7,7 @@ submit_file_cont = ['#!/bin/bash',
                     '#SBATCH --ntasks=1',
                     '#SBATCH --cpus-per-task=5',
                     '#SBATCH --time=05:00:00',
-                    '#SBATCH -p gpu',
+                    '#SBATCH -p boomsma',
                     '#SBATCH --gres=gpu:1']
 
 cwd = os.getcwd() 
@@ -17,7 +17,7 @@ cleaned_pdbs = glob.glob(path_cleaned +'/*.pdb')
 traj_format = 'xtc'
 
 # test run 5 proteins
-for path_pdb in cleaned_pdbs[70:150]:
+for path_pdb in cleaned_pdbs[50:75]:
     name_pdb = path_pdb.split('/')[-1].split('_')[0]
     out_dir = f'{cwd}/simulations/{name_pdb}/'
     cmd = f'{MD_python} {cwd}/protocol_prototype.py --pdb {cwd}/{path_pdb} --trajectory_format {traj_format} -o_dir {out_dir} --cuda'
