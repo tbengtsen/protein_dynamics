@@ -1139,6 +1139,7 @@ if __name__ =="__main__":
 
     # perform simulation
     simulation.step(int(sim_steps/2))
+    print('finished half the simulation')
 
     # save midways
     save_checkpoint(simulation, system, integrator, name_pdb, out_dir)
@@ -1157,6 +1158,6 @@ if __name__ =="__main__":
     curr_state = simulation.context.getState(getPositions=True)
     save_pdb(curr_state, modeller, pdb_out, out_dir)
 
-    print(f'production took: {(time.time()-end_equil)/360} h')
-    print(f'entire script took: {(time.time()-script_start_time)/360} h')
+    print(f'production took: {(time.time()-end_equil)/3600} h')
+    print(f'entire script took: {(time.time()-script_start_time)/3600} h')
     
