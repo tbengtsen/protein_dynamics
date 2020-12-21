@@ -12,13 +12,21 @@ submit_file_cont = ['#!/bin/bash',
 
 cwd = os.getcwd() 
 MD_python = '/home/trz846/anaconda3/envs/MD/bin/python'
-path_cleaned = 'data/CATH4.3/pdbs_cleaned/' ## XX <---- OBS ! CHANGE
-cleaned_pdbs = glob.glob(path_cleaned +'/*.pdb')
 traj_format = 'xtc'
 
+# remove already simulated
+with open('list_cleaned_pdbs.txt','r') as f:
+    cleaned_pdbs = f.readlines()
+cleaned_pdbs = [pdb.strip() for pdb in cleaned_pdbs]
+with open('already_sim_diku_comp.txt','r') as f:
+    already = f.readlines()
+already = [pdb.strip() for pdb in already]
+cleaned_pdbs = [pdb for pdb in cleaned_pdbs if pdb not in already]
+
+
 # test run 5 proteins
-for path_pdb in cleaned_pdbs[50:75]:
-    name_pdb = path_pdb.split('/')[-1].split('_')[0]
+for name_pdb in cleaned_pdbs[400:402]:
+    path_pdb = f'{cwd}/data/pdbs_cleaned/{name_pdb}_clean.pdb'
     out_dir = f'{cwd}/simulations/{name_pdb}/'
     cmd = f'{MD_python} {cwd}/protocol_prototype.py --pdb {cwd}/{path_pdb} --trajectory_format {traj_format} -o_dir {out_dir} --cuda'
     print('\ncmd:\n',cmd)
