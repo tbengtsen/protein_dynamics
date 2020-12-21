@@ -1161,3 +1161,5 @@ if __name__ =="__main__":
     print(f'production took: {(time.time()-end_equil)/3600} h')
     print(f'entire script took: {(time.time()-script_start_time)/3600} h')
     
+    with open('FINISHED_CORRECTLY', 'w') as f:
+        f.write('simulation finished after production run')
