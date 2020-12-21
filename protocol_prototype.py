@@ -416,7 +416,7 @@ def discard_solvent(modeller):
     return solute_indices
 
 
-def setup_reporter_files(simulation, out_steps, name_pdb, out_format, out_dir, modeller):
+def setup_reporter_files(simulation, out_steps, sim_steps, name_pdb, out_format, out_dir, modeller):
     """
     Sets reporters for saving and logging the simulation.
     Does not save water in trajectory, to save space.
@@ -456,7 +456,7 @@ def setup_reporter_files(simulation, out_steps, name_pdb, out_format, out_dir, m
     # set log file for simulation
     simulation.reporters.append(
         mm.app.StateDataReporter(
-            out_dir+f"log_{name_pdb}.log",
+            out_dir+f"log_sim_{name_pdb}.log",
             out_steps,
             time=True,
             totalEnergy=True,
@@ -780,10 +780,9 @@ if __name__ =="__main__":
     # ===========================================================================
     # trajectory output
     out_format = "xtc"  # only .pdb or .dcd in OpenMM
-    out_freq = (
-        50 * unit.picoseconds
-    )  # => 100 frames total. @Kresten wasn't this what we discussed? I can't remember:(
-
+    out_freq = 50 * unit.picoseconds
+    out_steps = int(out_freq / sim_dt)
+    
     # stdout frequency and log_file frequency
     log_freq = 200 * unit.picoseconds
 
@@ -1128,13 +1127,15 @@ if __name__ =="__main__":
 
 
     # setup reporters to save and log simulation and
-
-    traj_reporter = setup_reporter_files(simulation, 
-                         sim_steps,
-                         name_pdb, 
-                         out_format,
-                         out_dir,
-                         modeller)
+    traj_reporter = setup_reporter_files(
+                        simulation, 
+                        out_steps,
+                        sim_steps,
+                        name_pdb, 
+                        out_format,
+                        out_dir,
+                        modeller
+                    )
 
     # perform simulation
     simulation.step(int(sim_steps/2))
