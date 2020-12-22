@@ -19,6 +19,7 @@ data/pdbs_cleaned/*.pdb
 *plot_*.png
 simulations/*
 scripts/reduce*
+scripts/*pycache*
 
 # run files
 *ipynb_checkpoints*
