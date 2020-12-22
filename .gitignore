@@ -9,6 +9,7 @@ data/pdbs_raw/*.pdb
 data/pdbs_cleaned/*.pdb
 *log*.log
 *log*
+*core*
 
 # ignore trajecktories and checkpoints
 *nohup*
@@ -21,6 +22,7 @@ data/pdbs_cleaned/*.pdb
 simulations/*
 scripts/reduce*
 scripts/*pycache*
+simulations_strict_cutoffs/*/
 
 # run files
 *ipynb_checkpoints*
