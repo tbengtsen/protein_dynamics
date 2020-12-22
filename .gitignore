@@ -8,9 +8,10 @@ data/CATH4.3/pdbs_cleaned/*.pdb
 data/pdbs_raw/*.pdb
 data/pdbs_cleaned/*.pdb
 *log*.log
-
+*log*
 
 # ignore trajecktories and checkpoints
+*nohup*
 *.xtc
 *.dcd
 *checkpoint*
