@@ -7,7 +7,7 @@ submit_file_cont = ['#!/bin/bash',
                     '#SBATCH --ntasks=1',
                     '#SBATCH --cpus-per-task=5',
                     '#SBATCH --time=05:00:00',
-                    '#SBATCH -p boomsma',
+                    '#SBATCH -p gpu',
                     '#SBATCH --gres=gpu:1']
 
 cwd = os.getcwd() 
@@ -23,28 +23,38 @@ with open('already_sim_diku_comp.txt','r') as f:
 already = [pdb.strip() for pdb in already]
 cleaned_pdbs = [pdb for pdb in cleaned_pdbs if pdb not in already]
 
+# filter out nmr anyway
+with open('NMR_pdb_ids.txt','r') as f:
+    NMRs = f.readlines()
+NMRs = [nmr.strip() for nmr in NMRs]
+
+
 
 # test run 5 proteins
-for name_pdb in cleaned_pdbs[400:402]:
-    path_pdb = f'{cwd}/data/pdbs_cleaned/{name_pdb}_clean.pdb'
-    out_dir = f'{cwd}/simulations/{name_pdb}/'
-    cmd = f'{MD_python} {cwd}/protocol_prototype.py --pdb {cwd}/{path_pdb} --trajectory_format {traj_format} -o_dir {out_dir} --cuda'
-    print('\ncmd:\n',cmd)
-    if not os.path.isdir(out_dir):
-        os.makedirs(out_dir)
-    with open(out_dir + submit_file_name, 'w') as submit:
-        for line in submit_file_cont:
-            submit.write(line + '\n')
-        submit.write(f'#SBATCH --job-name={name_pdb}\n')
-        submit.write('\n')
-        submit.write(cmd)
-    
-    print(name_pdb, 'finish')
-    
-    # submit from seperate pdb dir
-    os.chdir(out_dir)
-    os.system(f'sbatch {submit_file_name}')
-    os.chdir(cwd)
+for name_pdb in cleaned_pdbs[2010:2020]:
+    if name_pdb in NMRs:
+        print('pdb is nmr', name_pdb)
+        continue
+    else:    
+        path_pdb = f'{cwd}/data/pdbs_cleaned/{name_pdb}_clean.pdb'
+        out_dir = f'{cwd}/simulations_strict_cutoffs/{name_pdb}/'
+        cmd = f'{MD_python} {cwd}/protocol_prototype.py --pdb {path_pdb} --trajectory_format {traj_format} -o_dir {out_dir} --cuda'
+        print('\ncmd:\n',cmd)
+        if not os.path.isdir(out_dir):
+            os.makedirs(out_dir)
+        with open(out_dir + submit_file_name, 'w') as submit:
+            for line in submit_file_cont:
+                submit.write(line + '\n')
+            submit.write(f'#SBATCH --job-name={name_pdb}\n')
+            submit.write('\n')
+            submit.write(cmd)
+
+        print(name_pdb, 'finish')
+
+        # submit from seperate pdb dir
+        os.chdir(out_dir)
+        os.system(f'sbatch {submit_file_name}')
+        os.chdir(cwd)
 
     
     
