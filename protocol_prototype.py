@@ -755,17 +755,17 @@ if __name__ =="__main__":
     # ===========================================================================
 
     # max equil time before discarding the protein
-    equil_2_max = 7.5 * unit.nanoseconds
+    equil_2_max = 5.0 * unit.nanoseconds
 
 
     # first assessing (energy+rmsd) equilibration after:
-    assess_equil_2 = 1.25 * unit.nanoseconds
+    assess_equil_2 = 2.5 * unit.nanoseconds
 
     # how much of traj to assess equilibrium on
-    assess_period_2 = 1.0 * unit.nanoseconds
+    assess_period_2 = 1.25 * unit.nanoseconds
 
     # max rmsd of equilibrated protein allowed before discarding
-    equil_max_rmsd = 5 * unit.angstrom  # a bit high but important for large flex tails or loops
+    equil_max_rmsd = 3.5 * unit.angstrom  # a bit high but important for large flex tails or loops
 
     # ===========================================================================
     #           Simulation / Production Run
@@ -792,15 +792,8 @@ if __name__ =="__main__":
     # ===========================================================================
     #           Post Filtering
     # ===========================================================================
-    rmsd_max = 5 * unit.angstrom  # ??
+    rmsd_max = 6 * unit.angstrom  # ??
 
-    # DEFINE PLATFORM PROPERTIES
-#     cuda = True
-#     if cuda:
-#         platform = mm.Platform.getPlatformByName("CUDA")
-#         platformProperties = {"CudaPrecision": "mixed"}
-    # else:
-    platformProperties = {"Precision": "mixed"}
 
     
     # ===========================================================================
@@ -999,7 +992,7 @@ if __name__ =="__main__":
     # how often to check if equilibrated if not equilibrated
     update_assesment = 250 * unit.picoseconds
 
-    window = 0.8 * unit.nanoseconds
+    window = 0.5 * unit.nanoseconds
     window = int((window / equil_dt) / report_steps)
     stride = 50 * unit.picoseconds
     stride = int((stride / equil_dt) / report_steps)
@@ -1048,7 +1041,7 @@ if __name__ =="__main__":
             )  # thrs=stdev
 
             rmsd_equilibrated = is_equilibrated(
-                assess_rmsd, window, stride, thrshold=1.2
+                assess_rmsd, window, stride, thrshold=1.0
             )  # thrs=stdev
 
             if E_equilibrated and rmsd_equilibrated:
