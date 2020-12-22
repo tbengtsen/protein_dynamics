@@ -762,7 +762,7 @@ if __name__ =="__main__":
     assess_equil_2 = 2.5 * unit.nanoseconds
 
     # how much of traj to assess equilibrium on
-    assess_period_2 = 1.25 * unit.nanoseconds
+    assess_period_2 = 1.00 * unit.nanoseconds
 
     # max rmsd of equilibrated protein allowed before discarding
     equil_max_rmsd = 3.5 * unit.angstrom  # a bit high but important for large flex tails or loops
@@ -992,7 +992,7 @@ if __name__ =="__main__":
     # how often to check if equilibrated if not equilibrated
     update_assesment = 250 * unit.picoseconds
 
-    window = 0.5 * unit.nanoseconds
+    window = 0.7 * unit.nanoseconds
     window = int((window / equil_dt) / report_steps)
     stride = 50 * unit.picoseconds
     stride = int((stride / equil_dt) / report_steps)
