@@ -8,9 +8,10 @@ data/CATH4.3/pdbs_cleaned/*.pdb
 data/pdbs_raw/*.pdb
 data/pdbs_cleaned/*.pdb
 *log*.log
-
+*log*
 
 # ignore trajecktories and checkpoints
+*nohup*
 *.xtc
 *.dcd
 *checkpoint*
@@ -19,6 +20,7 @@ data/pdbs_cleaned/*.pdb
 *plot_*.png
 simulations/*
 scripts/reduce*
+scripts/*pycache*
 
 # run files
 *ipynb_checkpoints*
