@@ -723,7 +723,7 @@ if __name__ =="__main__":
     # ===========================================================================
     #                    minimization parameters
     # ===========================================================================
-    minimize_steps = 5000  # steepest descent
+    minimize_steps = 20000  # steepest descent
     minimize_tolerance = 100.0 * unit.kilojoule_per_mole
 
     # positional restraints on backbone and sidechains
@@ -740,9 +740,9 @@ if __name__ =="__main__":
     equil_1_max = 2 * unit.nanoseconds
 
     # first assessing (energy) equilibration after:
-    assess_equil_1 = 0.2 * unit.nanoseconds
+    assess_equil_1 = 1.0 * unit.nanoseconds
     # last part of traj to assess trajectory on
-    assess_period_1 = 100 * unit.picoseconds
+    assess_period_1 = 200 * unit.picoseconds
 
 
     # spring force constants for restraints on backbone and sidechains
@@ -759,7 +759,7 @@ if __name__ =="__main__":
 
 
     # first assessing (energy+rmsd) equilibration after:
-    assess_equil_2 = 2.5 * unit.nanoseconds
+    assess_equil_2 = 4 * unit.nanoseconds
 
     # how much of traj to assess equilibrium on
     assess_period_2 = 1.00 * unit.nanoseconds
@@ -1075,16 +1075,17 @@ if __name__ =="__main__":
             print(f'OBS! Equilibration not reached within {equil_2_max}')
             sys.exit (f'Obs - Equilibration not reached within {equil_2_max}')
 
-    if curr_rmsd > equil_max_rmsd.value_in_unit(unit.angstrom):
+    if curr_rmsd > equil_max_rmsd.value_in_unit(unit.angstrom) or curr_rmsd > 3.5:
         # save non-equilibrated PDB
         out_file = f"equil_rmsd_to_high_{name_pdb}.pdb"
         save_pdb(curr_state, modeller, out_file, out_dir)
         print(f'OBS! RMSD {curr_rmsd} after equilibration > {equil_max_rmsd}')
         sys.exit (f'OBS! RMSD {curr_rmsd} after equilibration > {equil_max_rmsd}. Protein is discarded! ')
+    
     else:
         print(f'protein has rmsd of {curr_rmsd} => continues to production run')
 
-
+    assert curr_rmsd > equil_max_rmsd.value_in_unit(unit.angstrom), f'rmsd {curr_rmsd} too high '
 
     # save equilibrated PDB
     out_file = f"equil_{name_pdb}.pdb"
