@@ -1085,7 +1085,7 @@ if __name__ =="__main__":
     else:
         print(f'protein has rmsd of {curr_rmsd} => continues to production run')
 
-    assert curr_rmsd > equil_max_rmsd.value_in_unit(unit.angstrom), f'rmsd {curr_rmsd} too high '
+    assert curr_rmsd < equil_max_rmsd.value_in_unit(unit.angstrom), f'rmsd {curr_rmsd} too high '
 
     # save equilibrated PDB
     out_file = f"equil_{name_pdb}.pdb"
