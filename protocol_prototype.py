@@ -1081,6 +1081,10 @@ if __name__ =="__main__":
         save_pdb(curr_state, modeller, out_file, out_dir)
         print(f'OBS! RMSD {curr_rmsd} after equilibration > {equil_max_rmsd}')
         sys.exit (f'OBS! RMSD {curr_rmsd} after equilibration > {equil_max_rmsd}. Protein is discarded! ')
+    else:
+        print(f'protein has rmsd of {curr_rmsd} => continues to production run')
+
+
 
     # save equilibrated PDB
     out_file = f"equil_{name_pdb}.pdb"
