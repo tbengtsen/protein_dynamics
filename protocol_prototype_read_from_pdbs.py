@@ -977,7 +977,7 @@ if __name__ =="__main__":
     # ===========================================================================
     
     ### build from equil_1_save ### 
-    pdb = PDBFile(f'equil_1_{name_pdb}.pdb')
+    pdb = PDBFile(f'{out_dir}/equil_1_{name_pdb}.pdb')
     modeller = Modeller(pdb.topology, pdb.positions)
 
 
@@ -1140,7 +1140,7 @@ if __name__ =="__main__":
     # ===========================================================================
     
     ### build from equil_1_save ### 
-    pdb = PDBFile(f"equil_2_{name_pdb}.pdb")
+    pdb = PDBFile(f"{out_dir}/equil_2_{name_pdb}.pdb")
     modeller = Modeller(pdb.topology, pdb.positions)
 
 
