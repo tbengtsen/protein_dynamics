@@ -740,7 +740,7 @@ if __name__ =="__main__":
     equil_1_max = 2 * unit.nanoseconds
 
     # first assessing (energy) equilibration after:
-    assess_equil_1 = 1.0 * unit.nanoseconds
+    assess_equil_1 = 0.5 * unit.nanoseconds
     # last part of traj to assess trajectory on
     assess_period_1 = 200 * unit.picoseconds
 
@@ -759,7 +759,7 @@ if __name__ =="__main__":
 
 
     # first assessing (energy+rmsd) equilibration after:
-    assess_equil_2 = 4 * unit.nanoseconds
+    assess_equil_2 = 3.5 * unit.nanoseconds
 
     # how much of traj to assess equilibrium on
     assess_period_2 = 1.00 * unit.nanoseconds
@@ -770,7 +770,7 @@ if __name__ =="__main__":
     # ===========================================================================
     #           Simulation / Production Run
     # ===========================================================================
-    sim_time = 21 * unit.nanoseconds
+    sim_time = 20 * unit.nanoseconds
     sim_dt = 4.0 * unit.femtoseconds  # w All-bonds constr and H mass repartitioning
     sim_steps = int(sim_time / sim_dt)
 
@@ -1005,9 +1005,9 @@ if __name__ =="__main__":
     
     # # setup reporters to save and log simulation and
     equil2_steps = int(equil_2_max / equil_dt)
-    out_steps = int((200*unit.picoseconds).value_in_unit(unit.femtoseconds))
+    out_steps_equil = int((200*unit.picoseconds).value_in_unit(unit.femtoseconds))
     traj_reporter_equil = setup_reporter_files(simulation,
-                     out_steps,
+                     out_steps_equil,
                      equil2_steps,
                      name_pdb+'_equil_2', 
                      out_format,
@@ -1032,7 +1032,7 @@ if __name__ =="__main__":
     # how often to check if equilibrated if not equilibrated
     update_assesment = 250 * unit.picoseconds
 
-    window = 0.7 * unit.nanoseconds
+    window = 0.5 * unit.nanoseconds
     window = int((window / equil_dt) / report_steps)
     stride = 50 * unit.picoseconds
     stride = int((stride / equil_dt) / report_steps)
