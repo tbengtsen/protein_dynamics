@@ -774,7 +774,6 @@ if __name__ =="__main__":
     sim_dt = 4.0 * unit.femtoseconds  # w All-bonds constr and H mass repartitioning
     sim_steps = int(sim_time / sim_dt)
 
-
     # ===========================================================================
     #           Output
     # ===========================================================================

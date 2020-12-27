@@ -6,7 +6,9 @@ data/CATH4.3/pdbs_raw/*.pdb
 data/CATH4.3/pdbs_cleaned/*.pdb
 # data/cath4.2
 data/pdbs_raw/*.pdb
+data/pdbs_raw_cleaned_bio_assembly/*.pdb*
 data/pdbs_cleaned/*.pdb
+data/pdbs_cleaned_bio_assembly/*.pdb
 *log*.log
 *log*
 *core*
