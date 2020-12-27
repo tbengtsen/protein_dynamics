@@ -7,7 +7,7 @@ submit_file_cont = ['#!/bin/bash',
                     '#SBATCH --ntasks=1',
                     '#SBATCH --cpus-per-task=5',
                     '#SBATCH --time=05:00:00',
-                    '#SBATCH -p gpu',
+                    '#SBATCH -p boomsma',
                     '#SBATCH --gres=gpu:1']
 
 cwd = os.getcwd() 
@@ -28,16 +28,23 @@ with open('NMR_pdb_ids.txt','r') as f:
     NMRs = f.readlines()
 NMRs = [nmr.strip() for nmr in NMRs]
 
-
+count_nmr = 0
+count_already_sim = 0
 
 # test run 5 proteins
-for name_pdb in cleaned_pdbs[2010:2020]:
+#for name_pdb in cleaned_pdbs[2400:2600]:
+for name_pdb in cleaned_pdbs[2000:2400]:
     if name_pdb in NMRs:
         print('pdb is nmr', name_pdb)
+        count_nmr+=1
         continue
+#    elif os.path.isdir(f'{cwd}/simulations/{name_pdb}'):
+#        print(f'{name_pdb} already simulated')
+#        count_already_sim +=1
+#        continue
     else:    
         path_pdb = f'{cwd}/data/pdbs_cleaned/{name_pdb}_clean.pdb'
-        out_dir = f'{cwd}/simulations_strict_cutoffs/{name_pdb}/'
+        out_dir = f'{cwd}/simulations_longer_min/{name_pdb}/'
         cmd = f'{MD_python} {cwd}/protocol_prototype.py --pdb {path_pdb} --trajectory_format {traj_format} -o_dir {out_dir} --cuda'
         print('\ncmd:\n',cmd)
         if not os.path.isdir(out_dir):
@@ -56,7 +63,8 @@ for name_pdb in cleaned_pdbs[2010:2020]:
         os.system(f'sbatch {submit_file_name}')
         os.chdir(cwd)
 
-    
+print(f'discarded {count_nmr} pdbs due to nmr')
+print(f'discarded {count_already_sim} due to already sim')
     
     
     
