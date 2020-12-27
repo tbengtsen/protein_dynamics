@@ -23,6 +23,17 @@ simulations/*
 scripts/reduce*
 scripts/*pycache*
 simulations_strict_cutoffs/*/
+simulations_reinit/*/
+simulations_longer_min/*/
+run_prototype_diku_res2.5.py
+
+# tmp files
+run_prototype_diku_reinit.py
+run_prototype_diku_res2.5.py
+protocol_prototype_reinit.py
+list_cleaned_res2.5.txt
+pdbs_cleaned_biological_units/
+
 
 # run files
 *ipynb_checkpoints*
