@@ -4,12 +4,12 @@ Cleans raw downloaded pdbs to parse without errors/crashing for protocol.
 
 import sys, glob, os 
 sys.path.insert(0, '../scripts/')
-from clean_pdb import *
+from clean_pdb_center_protein import *
 
 # reduce executable
 reduce_executable = '../scripts/reduce/reduce'
 reduce_het_dict = '../scripts/reduce/reduce_wwPDB_het_dict.txt'
-out_dir = './pdbs_cleaned_bio_assembly/'
+out_dir = './pdbs_cleaned_bio_assembled_centered/'
 raw_pdbs = glob.glob('pdbs_raw_bio_assembly/*.pdb*')
 log_file = 'log_clean_raw_pdbs.log'
 
@@ -32,7 +32,7 @@ assert os.path.isfile(reduce_het_dict), (
 log = open(log_file, 'w')
 
 
-for pdb_file in raw_pdbs[13:]: 
+for pdb_file in raw_pdbs: 
     try:
         pdbid = pdb_file.split("/")[-1].split(".pdb")[0]
         outpdb = os.path.join(out_dir, pdbid + "_clean.pdb")
