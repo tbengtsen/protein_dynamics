@@ -1107,7 +1107,7 @@ if __name__ =="__main__":
             print(f'OBS! Equilibration not reached within {equil_2_max}')
             sys.exit (f'Obs - Equilibration not reached within {equil_2_max}')
 
-    if curr_rmsd > equil_max_rmsd.value_in_unit(unit.angstrom) or curr_rmsd > 3.5:
+    if curr_rmsd > equil_max_rmsd.value_in_unit(unit.angstrom):
         # save non-equilibrated PDB
         out_file = f"equil_rmsd_to_high_{name_pdb}.pdb"
         save_pdb(curr_state, modeller, out_file, out_dir)
