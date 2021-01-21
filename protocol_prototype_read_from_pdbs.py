@@ -834,11 +834,11 @@ if __name__ =="__main__":
     # load force field
     forcefield = FF.ForceField(force_field, water_model)
 
-    # add hydrogens
-    print(
-        f"Input protein contains {np.array(modeller.positions).shape[0]} atoms",
-        "\nAdding hydrogens...",
-    )
+#   # add hydrogens - keep the once from cleaned pdb
+#    print(
+#        f"Input protein contains {np.array(modeller.positions).shape[0]} atoms",
+#        "\nAdding hydrogens...",
+#    )
     modeller.addHydrogens(forcefield)
     print(f"\t System  contains {np.array(modeller.positions).shape[0]} atoms")
 
