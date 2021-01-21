@@ -8,6 +8,8 @@ def dump_traj(traj_fn, pdb_fn, freq = None, o_dir = './traj_pdbs' ):
     Takes trajectory file and cleaned pdb file and splits
     trajectory into n frames that are each save as a pdb file
     '''
+    assert os.path.exists(o_dir), 'Output directory does not exit'
+    
     name_pdb = pdb_fn.split('/')[-1].split('.pdb')[0]
     
     traj = md.load(traj_fn, top=pdb_fn)
