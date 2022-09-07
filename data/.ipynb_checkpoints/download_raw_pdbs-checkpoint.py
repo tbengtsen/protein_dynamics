@@ -17,14 +17,14 @@ if not os.path.exists(target_path):
 # download all pdbs from processed CATH4.3 from rcsb 
 for ds_type  in clean_data:
     for pdb in clean_data[ds_type]:
-        try:
-            response = urllib.request.urlopen(f'https://files.rcsb.org/download/{pdb}.pdb')
-            target_file = target_path + f'/{pdb}.pdb'
-            if not os.path.isfile(target_file):
+        target_file = target_path + f'/{pdb}.pdb'
+        if not os.path.isfile(target_file):
+            try:
+                response = urllib.request.urlopen(f'https://files.rcsb.org/download/{pdb}.pdb')
                 with open(target_file, 'wb') as f:
                     f.write(response.read())
-            print(f'downloaded {pdb}')    
+                print(f'downloaded {pdb}')    
 
-        except: 
-            print(f'cannot download {pdb}')
+            except: 
+                print(f'cannot download {pdb}')
 
