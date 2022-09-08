@@ -3,8 +3,8 @@ The PDB data used for these simulations are based on the CATH 4.2 [1] Protein St
 
 In addition, we here filter out proteins from the CATH 4.2 based on whether their structure are appropiate for these types of automated MD simulations. 
 
-# Simulation filter criterias
-The conditions used to filter out proteins are as follows: 
+# Furtheer data filter criterias for simulations
+Not all PDB files present in the CATH 4.2 database are suitable for these kinds of automated molecular dynamics simulations. We therefor apply further filtering criteria as described below:
 
     - if it is a membrane protein => excluded
     - if it is an unsuitable experimental method  for solving the structure => excluded (unsuitable only in the sense of inappropiate for these automated simulations). Here the following methods are included and all others hence excluded:
@@ -24,6 +24,20 @@ The conditions used to filter out proteins are as follows:
 **OBS!** It should be stressed that neither of the filtering conditions descriped above necessarily say anything about the quality of the given structure, but are here used as a way to avoid issues when automating simulations. 
                    
 For more details, see the filter script in `CATH4.2/filter_cath_dataset.ipynb`
+
+# PDB data processing
+## Download format
+The downloaded PDB files are downloaded in their bioassembly form from `ftp://ftp.wwpdb.org/pub/pdb/data/biounit/coordinates` if existing.
+
+## Rebuild missing atoms or residueese
+As many PDB files have missing atoms or even residues these are rebuildt into the PDB file. NB as mentioned above only terminal missing residues are rebuilt here. However, a script exists to rebuild gaps in the structure `rebuild_by_modeller.py` in the `scripts/clean_pdb_functions/` directory. This is not automated and thus only used for downstream calculations of stability data.
+
+The programs Reduce [3] together with pdbfixer from the great OpenMM [4] are used to estimate charges, and for rebuilding other atoms and residues. For more information, see the scripts in scripts/clean_pdb_functions/` directory
+
+
+
+
+
 
 
 # Citations:
@@ -52,3 +66,21 @@ booktitle = {Advances in Neural Information Processing Systems}
 year = {2019}
 }
 
+3)
+@article{Reduce,
+author = {Word, et. al.},
+title = {Asparagine and Glutamine: Using Hydrogen Atom Contacts in the Choice of Side-chain Amide Orientation},
+journal = { J. Mol. Biol.}
+year = {1999}, 
+volumen = {285 },
+pages = { 1733-1747},
+website = {https://github.com/rlabduke/reduce}}
+
+4)
+@article{OpenMM,
+author = {P. Eastman, J. Swails, J. D. Chodera, R. T. McGibbon, Y. Zhao, K. A. Beauchamp, L.-P. Wang, A. C. Simmonett, M. P. Harrigan, C. D. Stern, R. P. Wiewiora, B. R. Brooks, and V. S. Pande. },
+titleee = { OpenMM 7: Rapid development of high performance algorithms for molecular dynamics},
+journal = {PLOS Comp. Biol.},
+year = {2017},
+volumen = { 13(7): e1005659. },
+website ={ https://github.com/openmm/pdbfixer }}
