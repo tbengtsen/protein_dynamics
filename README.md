@@ -55,8 +55,8 @@ see:
 
 
 # Citations:
-```
-1) 
+
+```1) 
 @article{CATH,
 author = {Sillitoe, Ian and Bordin, Nicola and Dawson, Natalie and Waman, Vaishali P and Ashford, Paul and Scholes, Harry M and Pang, Camilla S M and Woodridge, Laurel and Rauer, Clemens and Sen, Neeladri and Abbasian, Mahnaz and Le Cornu, Sean and Lam, Su Datt and Berka, Karel and Varekova, Ivana Hutařová and Svobodova, Radka and Lees, Jon and Orengo, Christine A},
 title = "{CATH: increased structural coverage of functional space}",
@@ -76,4 +76,15 @@ title = {Generative Models for Graph-Based Protein Design},
 booktitle = {Advances in Neural Information Processing Systems}
 year = {2019}
 }
+```
+```
+3) 
+
+@article{OpenMM,
+author = {P. Eastman, J. Swails, J. D. Chodera, R. T. McGibbon, Y. Zhao, K. A. Beauchamp, L.-P. Wang, A. C. Simmonett, M. P. Harrigan, C. D. Stern, R. P. Wiewiora, B. R. Brooks, and V. S. Pande. },
+titleee = { OpenMM 7: Rapid development of high performance algorithms for molecular dynamics},
+journal = {PLOS Comp. Biol.},
+year = {2017},
+volumen = { 13(7): e1005659. },
+website ={ https://github.com/openmm/pdbfixer }}
 ```
