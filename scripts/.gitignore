@@ -3,3 +3,5 @@
 *.a
 *.o
 reduce_src/reduce
+old/
+submit_diku.sh

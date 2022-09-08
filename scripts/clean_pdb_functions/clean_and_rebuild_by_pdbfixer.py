@@ -139,7 +139,8 @@ def _reduce(
     Add hydrogens using reduce program -- needed to not crash in next step. 
     '''
     # check if files exists
-    assert os.path.isfile(pdb_input_filename),  f'Cannot find {pdb_input_filename}'
+    #assert os.path.isfile(pdb_input_filename),  f'Cannot find {pdb_input_filename}'
+
     
     reduce_het_dict = os.path.join(os.path.dirname(reduce_executable), "reduce_wwPDB_het_dict.txt")
     assert os.path.isfile(reduce_het_dict), (
@@ -327,10 +328,10 @@ def clean_pdb(pdb_input_filename: str, out_dir: str, reduce_executable: str):
         Path to the reduce executable
     """
     
-    assert _locates_gaps(pdb_input_filename), ('PDBfixer has not located',
-                                       'a possible gap in the structure.',
-                                       'This is likely due to a problem',
-                                       'reading the SEQRES in the pdbheader')
+    #assert _locates_gaps(pdb_input_filename), ('PDBfixer has not located',
+    #                                   'a possible gap in the structure.',
+    #                                   'This is likely due to a problem',
+    #                                   'reading the SEQRES in the pdbheader')
 
     
     pdbid = pdb_input_filename.split("/")[-1].split(".pdb")[0]
@@ -356,13 +357,13 @@ def clean_pdb(pdb_input_filename: str, out_dir: str, reduce_executable: str):
                                                    )
                
         ## TONE
-        # Step X: center protein at origin 
+        # Step 4: center protein at origin 
         with tempfile.NamedTemporaryFile(mode="wt", delete=True) as temp4:
             topology, positions, tempX = _center_at_origin(fixer,temp4)
 
 
             if rebuilt_residues is False: 
-                # Step 4: Correct for pdbfixer not preserving insertion codes
+                # Step 5: Correct for pdbfixer not preserving insertion codes
                 with tempfile.NamedTemporaryFile(mode="wt", delete=True) as temp5:
                     structure = _fix_numbering(topology, positions, temp3, temp5)
                 with tempfile.NamedTemporaryFile(mode="wt", delete=True) as temp6:
@@ -370,7 +371,7 @@ def clean_pdb(pdb_input_filename: str, out_dir: str, reduce_executable: str):
                     PDBIO.save(temp6)
                     temp6.flush()
 
-                    # step 5: Add hydrogens again for the missing residues and 
+                    # step 6: Add hydrogens again for the missing residues and 
                     # atoms pdbfixer rebuilt 
                     with tempfile.NamedTemporaryFile(mode="wt", delete=True) as temp7:
                         structure = _reduce(reduce_executable, temp6.name, pdbid, temp7)

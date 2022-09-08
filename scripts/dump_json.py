@@ -142,11 +142,43 @@ def get_seq (topology):
         seq = ''.join(seq)
         
         sequences[alphabet[chain_idx]] = seq
-
+    
     return sequences
 
+def dump_single(pdb_fn, pdb_name=None):
+    '''Dumps single pdb features for json format'''
+    
+    pdb = md.load(pdb_fn, top=pdb_fn)
+    
+    # get name of pdb 
+    if pdb_name is None:
+        pdb_name = pdb_fn.split('/')[-1].split('.pdb')[0]
+        if len(list(pdb_name)) > 4:
+            pdb_name = pdb_name.split('_')[0]
+        assert len(list(pdb_name)) == 4, 'pdb id name is not 4 characters. Specify name in arguments'
+    
+    # get sequences of each chain
+    sequences = get_seq (pdb.topology)
+    
+    # save structures for each chain seperately 
+    for chain in sequences.keys():
+        # create dict for chain/frame structure info in
+        dump = {}
+        dump["ts"] = 0
+        name = pdb_name + '.' + chain.upper() 
+        dump["name"] = name 
+        dump["seq"] = sequences[chain]
 
+        coords = get_coords(pdb)[chain]
+        assert len(coords['N'])==len(sequences[chain]), 'coordinates and sequence len does not match'
+        dump["coords"] = coords
         
+    
+    return dump    
+        
+    
+    
+    
     
 def dump_traj(traj_fn, 
                 pdb_fn,
@@ -194,7 +226,6 @@ def dump_traj(traj_fn,
     # save structures for each chain seperately 
     for chain in sequences.keys():
         
-                
         for frame in traj:
             # get sim timestep of each frame
             ts = int(frame.time[0])
@@ -214,7 +245,19 @@ def dump_traj(traj_fn,
                 dump["coords"] = coords
             
                 dump_traj.append(dump)
-    
+        
+        # also dump original structure from pdb database as -1
+        dump = {}
+        dump["ts"] = -1
+        name = pdb_name + '.' + chain.upper() + '.-1' 
+        dump["name"] = name 
+        dump["seq"] = sequences[chain]
+        coords = get_coords(top)[chain]
+        assert len(coords['N'])==len(sequences[chain]), 'coordinates and sequence len does not match'
+        dump["coords"] = coords
+        dump_traj.append(dump)
+
+        
     return dump_traj    
         
 

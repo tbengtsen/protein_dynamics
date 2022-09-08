@@ -103,7 +103,18 @@ def dump_traj(traj_fn,
                 with open(o_pdb, "w") as out:
                     PDBIO.set_structure(structure)
                     PDBIO.save(out)
-                
+    
+    # also dump pdb database original structure
+    o_pdb = o_dir + f'/{o_name}_-1ps.pdb'
+    if renumber_file is None :
+        top.save_pdb(o_pdb) 
+    else:
+        structure = renumber(top, renumber_file)
+        with open(o_pdb, "w") as out:
+            PDBIO.set_structure(structure)
+            PDBIO.save(out)
+
+
 
 def renumber(frame, renumber_file):
     '''
