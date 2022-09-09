@@ -1,18 +1,32 @@
+#Ignore directories with data
+dynamics_augmented_strucutures/
+simulations_new/
+track_simulations.ipynb
+run_prototype_computerome_gpu_new.py
+run_prototype_diku_new.py
+RMSDs_to_high.dat
+ML_models/
+
+###ignore ML model git repos###
+
+ML_models/neurips19-graph-protein-design
+
+### data ###
+
 #data/CATH*
+
 *mmtf*/
-data/CATH4.3/mmtf/*
-data/CATH4.3/mmtf*
-data/CATH4.3/pdbs_raw/*.pdb
-data/CATH4.3/pdbs_cleaned/*.pdb
 # data/cath4.2
-data/pdbs_raw/*.pdb
-data/pdbs_raw_bio_assembly/*.pdb*
-data/pdbs_cleaned/*.pdb
-data/pdbs_cleaned_bio_assembly/*.pdb
+**.pdb**
+
 *log*.log
 *log*
 *core*
 
+## ignored dumped frame 
+dynamics_augmented_strucutures/*/*.pdb 
+dynamics_augmented_strucutures/*.jsonl
+dynamics_augmented_strucutures/*/*.jsonl
 # ignore trajecktories and checkpoints
 *nohup*
 *.xtc
@@ -35,7 +49,7 @@ run_prototype_diku_res2.5.py
 protocol_prototype_reinit.py
 list_cleaned_res2.5.txt
 pdbs_cleaned_biological_units/
-
+collaboration_maher/
 
 # run files
 *ipynb_checkpoints*
