@@ -6,7 +6,7 @@ run_prototype_computerome_gpu_new.py
 run_prototype_diku_new.py
 RMSDs_to_high.dat
 ML_models/
-
+.gitignore
 ###ignore ML model git repos###
 
 ML_models/neurips19-graph-protein-design
