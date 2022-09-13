@@ -1,6 +1,6 @@
 # Automated  Protein Dynamics Protocol 
 
-This repo contains the means to automate short molecular dynamics simulations on protein structures from a raw PDB file to an equilibrated and then simulated trajectory output file. It is based on the great OpenMM simulation package [1](-citations). 
+This repo contains the means to automate short molecular dynamics simulations on protein structures from a raw PDB file to an equilibrated and then simulated trajectory output file. It is based on the great OpenMM simulation package [1](#openmm). 
 
 The repo was created to obtain a dynamics augmented protein structure dataset to test the impact of using dynamics augmentation as input to train  machine learning models specifically for predicting protein stability. The 1282 finished 20 ns simulations and their outputs are currently not freely available but this is being worked on. For access, contact Wouter Boomsma at University of Copenhagen, and for more information about the dataset see the below in:  Augmentated dynamics datase
 
@@ -38,7 +38,7 @@ cd reduce/
 make; make install # This might give an error but provide the reduce executable in this directory
 ```
 
-# Enviroment
+# Environment
 See the file: `environment.yml` for which python packages and versions is used. 
 
 
@@ -106,6 +106,8 @@ see:
 
 
 # Citations
+
+<a name="openmm"></a>
 
 ```
 1) 
