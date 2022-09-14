@@ -778,7 +778,7 @@ if __name__ =="__main__":
     #           Output
     # ===========================================================================
     # trajectory output
-    out_format = "xtc"  # only .pdb or .dcd in OpenMM
+    out_format = "xtc"  # only .pdb or .dcd in OpenMM so need other package for xtc output which is considerably smaller
     out_freq = 50 * unit.picoseconds
     out_steps = int(out_freq / sim_dt)
     
@@ -791,7 +791,7 @@ if __name__ =="__main__":
     # ===========================================================================
     #           Post Filtering
     # ===========================================================================
-    rmsd_max = 6 * unit.angstrom  # ??
+    rmsd_max = 6 * unit.angstrom  
 
 
     
